@@ -7,7 +7,7 @@
   --medium-gray: #939393;
   --dark-gray: #535353;
   --light-black: rgb(29,29,31);
-  --light-green: #3b5348;
+  --light-green: #6f8883;
   --dark-green: #233000;
 }
 
@@ -37,13 +37,6 @@ body.before-load {
   visibility: visible;
   /* iPhone에서 가로 스크롤 방지 */
   overflow-x: hidden;
-}
-
-.sticky-elem {
-  display: none;
-  position: fixed;
-  left: 0;
-  width: 100%;
 }
 
 /* Loading Circle */
@@ -132,7 +125,8 @@ body.before-load {
 .global-nav-links {
   justify-content: space-between;
 }
-.global-nav-item {
+.global-nav-item,
+.local-nav-links a {
   text-transform: capitalize;
 }
 
@@ -144,6 +138,7 @@ body.before-load {
 .local-nav-links a:not(.product-name) {
   margin-left: 2em;
   font-size: 0.8rem;
+  letter-spacing: 0;
 }
 
 /* Body Content */
@@ -246,7 +241,14 @@ body.before-load {
   font-size: 1.2rem;
 }
 
+.sticky-elem {
+  display: none;
+  position: fixed;
+  left: 0;
+  width: 100%;
+}
 #scene-0 #section-0 .sticky-elem,
+#scene-1 #section-1 .sticky-elem,
 #scene-2 #section-2 .sticky-elem,
 #scene-3 #section-3 .sticky-elem {
   display: block;
@@ -256,6 +258,10 @@ body.before-load {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.scroll-effect-end .sticky-elem {
+  display: none !important;
 }
 
 /* Canvas */
@@ -279,6 +285,88 @@ body.before-load {
   opacity: 1;
 }
 
+/* Bottom Content */
+.pannel {
+  padding: 5rem 2rem;
+  text-align: center;
+}
+.inner {
+  max-width: 1024px;
+  width: 100%;
+  margin: 0 auto;
+}
+.inner span {
+  display: block;
+}
+
+.pannel-a {
+  border-top: 1px solid var(--dark-gray);
+  background: url('../src/img/last-large.jpg') no-repeat center / cover;
+  font-weight: bold;
+}
+.pannel-a .large-text {
+  font-size: 2rem;
+}
+.pannel-a .small-caption {
+  margin-top: 2rem;
+  color: var(--light-green);
+  font-size: 1.2rem;
+}
+
+.pannel-b {
+  background-color: var(--light-gray);
+}
+.pannel-b .inner {
+  padding: 5rem 0;
+  border-radius: 3rem;
+  box-shadow: 0 2.5rem 50px -10px rgba(150,150,150,0.8);
+  background-color: var(--white);
+  background-image: url('../src/img/last-back.jpg');
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: 80% 100%;
+  color: var(--black);
+  font-weight: bold;
+  line-height: 1.6;
+}
+.pannel-b .large-title {
+  font-size: 2rem;
+}
+.pannel-b .medium-text {
+  font-size: 1.2rem;
+}
+
+/* Bottom Links */
+.bottom-links {
+  padding: 2rem 1rem 5rem;
+  background-color: var(--light-gray);
+  color: var(--dark-gray);
+}
+.bottom-links:before {
+  content: '';
+  position: relative;
+  top: -2rem;
+  display: block;
+  width: 100%;
+  height: 0;
+  border-top: 1px solid var(--medium-gray);
+}
+.links-items {
+  max-width: 1024px;
+  margin: 1.5rem 0;
+}
+.links-items a {
+  padding: 0 0.7em;
+  text-transform: capitalize;
+  font-size: 0.9rem;
+  line-height: 2;
+}
+.links-category {
+  padding: 1em 0.5em;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
 /* Footer */
 .footer {
   display: flex;
@@ -288,7 +376,7 @@ body.before-load {
   height: 10rem;
   padding: 2rem 0.5rem;
   background-color: var(--dark-green);
-  color: var(--light-gray);
+  color: var(--white);
   font-weight: bold;
   letter-spacing: 0.05em;
   line-height: 1.6em;
@@ -328,6 +416,55 @@ body.before-load {
   }
   .canvas-caption {
 		font-size: 2rem;
+  }
+
+  .pannel {
+    padding: 10rem 5rem;
+  }
+  .pannel-a .large-text {
+    margin: 0 auto;
+    font-size: 4vw;
+  }
+  .pannel-b .large-title {
+    font-size: 4vw;
+  }
+  .pannel-a .small-caption,
+  .pannel-b .medium-text {
+    font-size: 1.5vw;
+  }
+  .pannel-b .inner {
+    max-width: 800px;
+    padding: 10rem 0;
+    background-size: 40%;
+    box-shadow: 0 2.5rem 100px -30px rgba(150,150,150,0.8);
+    transition: 0.15s;
+  }
+  .pannel-b .inner:hover {
+    box-shadow: 0 -1rem 50px -30px rgba(150,150,150,0.3);
+    transform: translate3d(0, 0.5rem, 0);
+    -webkit-transform: translate3d(0, 0.5rem, 0);
+    
+  }
+
+  .bottom-links {
+    padding: 3rem 1rem;
+  }
+  .bottom-links:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  .links-items {
+    float: left;
+    width: 50%;
+  }
+  .links-items a {
+    padding: 0 1em;
+    font-size: 1rem;
+  }
+  .links-category {
+    padding: 0.5em;
+    font-size: 1.5rem;
   }
 
   .mo {
