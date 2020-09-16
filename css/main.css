@@ -1,0 +1,336 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;900&display=swap');
+
+:root {
+  --black: black;
+  --white: white;
+  --light-gray: #dedede;
+  --medium-gray: #939393;
+  --dark-gray: #535353;
+  --light-black: rgb(29,29,31);
+  --light-green: #3b5348;
+  --dark-green: #233000;
+}
+
+html, body {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+}
+
+body {
+  overflow-x: hidden;
+  color: white;
+  letter-spacing: -0.05em;
+  background: var(--black);
+}
+p {
+  line-height: 1.6em;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body.before-load {
+	overflow: hidden;
+}
+.container {
+  visibility: visible;
+  /* iPhone에서 가로 스크롤 방지 */
+  overflow-x: hidden;
+}
+
+.sticky-elem {
+  display: none;
+  position: fixed;
+  left: 0;
+  width: 100%;
+}
+
+/* Loading Circle */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background: var(--black);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.before-load .container {
+  visibility: hidden;
+}
+.before-load .loading {
+  opacity: 1;
+}
+@keyframes loadingSpin {
+  100% { transform: rotate(360deg) }
+}
+@keyframes loadingCircleAni {
+  0% { stroke-dashoffset: 157; }
+  80% { stroke-dashoffset: -147; }
+  100% { stroke-dashoffset: -157; }
+}
+.loading-circle {
+  width: 54px;
+  height: 54px;
+  animation: loadingSpin 2.5s infinite linear;
+}
+.loading-circle circle {
+  stroke: var(--light-gray);
+  stroke-width: 4;
+  /* getTotalLength()로 얻어놀 수 있음 */
+  stroke-dasharray: 157;
+  stroke-dashoffset: 0;
+  fill: none;
+  animation: loadingCircleAni 1.5s infinite ease-in-out;
+}
+
+/* Global Nav */
+.global-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 44px;
+  padding: 0 1rem;
+  z-index: 10; /* more than canvas */
+}
+.local-nav {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  width: 100%;
+  height: 52px;
+  padding: 0 1rem;
+  border-bottom: 1px solid var(--dark-gray);
+  z-index: 11; /* more than canvas, global-nav */
+}
+.local-nav-sticky .local-nav {
+  position: fixed;
+  top: 0;
+  background: rgba(29,29,31,0.1);
+  
+  -webkit-backdrop-filter: saturate(180%) blur(15px);
+	-moz-backdrop-filter: saturate(180%) blur(15px);
+	-o-backdrop-filter: saturate(180%) blur(15px);
+	backdrop-filter: saturate(180%) blur(15px);
+}
+
+.global-nav-links,
+.local-nav-links {
+  display: flex;
+  align-items: center;
+  max-width: 1024px;
+  height: 100%;
+  margin: 0 auto;
+}
+.global-nav-links {
+  justify-content: space-between;
+}
+.global-nav-item {
+  text-transform: capitalize;
+}
+
+.product-name {
+  margin-right: auto;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.local-nav-links a:not(.product-name) {
+  margin-left: 2em;
+  font-size: 0.8rem;
+}
+
+/* Body Content */
+.scroll-section {
+  position: relative;
+  padding-top: 50vh;
+}
+/* #0 */
+#section-0 h1 {
+  position: relative;
+  top: -7vh;
+  font-size: 4rem;
+  text-align: center;
+  z-index: 9;
+}
+
+.main-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3em;
+  top: 45vh;
+  font-size: 2.5rem;
+  opacity: 0;
+  z-index: 8;
+}
+.main-message p {
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.2;
+}
+.main-message small {
+  display: block;
+  margin-bottom: 0.5em;
+  font-size: 1.1rem;
+}
+
+/* #1 */
+.scroll-section#section-1 {
+  padding: 7vh 0.5rem;
+}
+.desc {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  font-size: 1.2rem;
+  color: var(--medium-gray);
+}
+.desc strong {
+  float: left;
+  margin-right: 0.6em;
+  margin-bottom: 0.6em;
+  font-size: 3rem;
+  line-height: 1.05em;
+  color: var(--light-gray);
+}
+.desc-message {
+  width: 50%;
+  font-weight: bold;
+  opacity: 0;
+  z-index: 8; /* canvas z-index: 5*/
+}
+.pin {
+  width: 1px;
+  height: 100px;
+  background-color: var(--light-gray);
+}
+
+/* #2 */
+#section-2 .main-message {
+  font-size: 3.5rem;
+}
+#section-2 .b {
+  top: 20%;
+  left: 30%;
+}
+#section-2 .c {
+  top: 25%;
+  left: 42%;
+}
+
+/* #3 */
+.mid-message {
+  max-width: 1024px;
+  margin: 0 auto 100px;
+  padding: 0 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--dark-gray);
+}
+.mid-message strong {
+  display: block;
+  color: var(--light-gray);
+}
+.canvas-caption {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  color: #888;
+  font-size: 1.2rem;
+}
+
+#scene-0 #section-0 .sticky-elem,
+#scene-2 #section-2 .sticky-elem,
+#scene-3 #section-3 .sticky-elem {
+  display: block;
+  will-change: transform, opacity;
+}
+#section-3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Canvas */
+#scene-0 #section-0 .sticky-canvas,
+#scene-2 #section-2 .sticky-canvas {
+  opacity: 1;
+}
+.sticky-canvas {
+  top: 0;
+  height: 100%;
+  z-index: 5; /* navs: 10-11, messages: 8-9 */
+}
+.sticky-canvas canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.blend-canvas.sticky {
+  position: fixed;
+  top: 0; /* script에서 계산해서 넣기 - main.js */
+  opacity: 1;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: content-box;
+  height: 10rem;
+  padding: 2rem 0.5rem;
+  background-color: var(--dark-green);
+  color: var(--light-gray);
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  line-height: 1.6em;
+}
+
+
+@media (min-width: 1024px) {
+  #section-0 h1 {
+    font-size: 9vw;
+  }
+  .main-message {
+    font-size: 4vw;
+  }
+  .desc {
+    font-size: 2rem;
+  }
+  .desc strong {
+    font-size: 6rem;
+  }
+  #section-2 .main-message {
+    font-size: 6vw;
+  }
+  #section-2 .b {
+    left: 53%;
+  }
+  #section-2 .c {
+    left: 47%;
+  }
+  .main-message small {
+    font-size: 1.5vw;
+  }
+  .desc-message {
+    width: 20%;
+  }
+  .mid-message {
+    font-size: 4vw;
+  }
+  .canvas-caption {
+		font-size: 2rem;
+  }
+
+  .mo {
+    display: none;
+  }
+}
