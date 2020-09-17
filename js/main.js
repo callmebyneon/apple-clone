@@ -237,11 +237,10 @@
     const currentYOffset = yOffset - prevScrollHeight;
     const scrollHeight = sceneInfo[currentScene].scrollHeight;
     const scrollRatio = currentYOffset / scrollHeight; // (현재 section의 진행 정도) / (현재 씬의 scrollHeight) 
-    // console.log(currentScene, currentYOffset);
 
     switch (currentScene) {
       case 0:
-        // console.log('play 0');
+        // play 0
 
         // loop():515
         // let sequence1 = Math.round(calcValues(values.imageSequence, currentYOffset));
@@ -293,7 +292,7 @@
 
 
       case 2:
-        // console.log('play 2');
+        // play 2
 
         // loop():519
         // let sequence2 = Math.round(calcValues(values.imageSequence, currentYOffset));
@@ -376,7 +375,7 @@
 
 
       case 3:
-        // console.log('play 3');
+        // play 3
         let step = 0;
         // 가로, 세로 모두 꽉 차게 하기 위해 여기에서 세팅(계산 필요)
         const widthRatio = window.innerWidth / objs.canvas.width;
@@ -526,17 +525,32 @@
   function loop() {
     delayedYOffset += (yOffset - delayedYOffset) * acc; // ** 가속도가 적용된 yOffset
 
-    if (!enterNewScene) {
+    // console.log(delayedYOffset);
+    if (!newScene) {
       if (currentScene === 0 || currentScene === 2) {
         const currentYOffset = delayedYOffset - prevScrollHeight;
         const objs = sceneInfo[currentScene].objs;
         const values = sceneInfo[currentScene].values;
         let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
-        if (objs.videoImages[sequence]) {
-          objs.context.drawImage(objs.videoImages[sequence], 0, 0);
-        }
+
+        objs.videoImages[sequence] && objs.context.drawImage(objs.videoImages[sequence], 0, 0);
       }
     }
+
+    // home이나 end를 이용해 페이지 끝으로 고속 이동하면 body id가 제대로 인식 안되는 경우를 해결
+
+    if (delayedYOffset < 1) {
+      // console.log('Home!');
+      currentScene = 0;
+      scrollLoop();
+      sceneInfo[0].objs.canvas.style.opacity = 1;
+      sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
+    }
+    if ((document.body.offsetHeight - window.innerHeight) - delayedYOffset < 1) {
+      let tempYOffset = yOffset;
+      scrollTo(0, tempYOffset - 1);
+    }
+
 
     // 1️⃣: loop the function loop() & 2️⃣
     rafId = requestAnimationFrame(loop);
@@ -582,7 +596,6 @@
         rafId = requestAnimationFrame(loop);
         rafState = true;
       }
-      console.log(currentScene);
     });
 
     window.addEventListener('resize', () => {
@@ -615,7 +628,6 @@
   document.querySelector('.loading').addEventListener('transitionend', (event) => {
     document.body.removeChild(event.currentTarget);
   });
-
 
   setCanvasImages();
 
