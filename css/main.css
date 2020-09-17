@@ -55,6 +55,7 @@ body.before-load {
   transition: opacity 0.5s;
 }
 .before-load .container {
+  display: none;
   visibility: hidden;
 }
 .before-load .loading {
@@ -441,8 +442,8 @@ body.before-load {
   }
   .pannel-b .inner:hover {
     box-shadow: 0 -1rem 50px -30px rgba(150,150,150,0.3);
-    transform: translate3d(0, 0.5rem, 0);
-    -webkit-transform: translate3d(0, 0.5rem, 0);
+    transform: translate3d(0, 0.5rem, 0) scale(0.98);
+    -webkit-transform: translate3d(0, 0.5rem, 0)  scale(0.98);
     
   }
 

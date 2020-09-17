@@ -147,14 +147,14 @@
     let imgElem1;
     for (let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
       imgElem1 = new Image();
-      imgElem1.src = `./src/001/IMG_${2765 + i}.JPG`;
+      imgElem1.src = `./src/001/IMG_${2765 + i}.jpg`;
       sceneInfo[0].objs.videoImages.push(imgElem1);
     }
 
     let imgElem2;
     for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
       imgElem2 = new Image();
-      imgElem2.src = `./src/002/IMG_${3102 + i}.JPG`;
+      imgElem2.src = `./src/002/IMG_${3102 + i}.jpg`;
       sceneInfo[2].objs.videoImages.push(imgElem2);
     }
 
@@ -526,20 +526,16 @@
   function loop() {
     delayedYOffset += (yOffset - delayedYOffset) * acc; // ** 가속도가 적용된 yOffset
 
-    if (!newScene) {
-
-      const currentYOffset = delayedYOffset - prevScrollHeight;
-      const objs = sceneInfo[currentScene].objs;
-      const values = sceneInfo[currentScene].values;
-      if (currentScene === 0) {
-        let sequence1 = Math.round(calcValues(values.imageSequence, currentYOffset));
-        objs.videoImages[sequence1] && objs.context.drawImage(objs.videoImages[sequence1], 0, 0);
+    if (!enterNewScene) {
+      if (currentScene === 0 || currentScene === 2) {
+        const currentYOffset = delayedYOffset - prevScrollHeight;
+        const objs = sceneInfo[currentScene].objs;
+        const values = sceneInfo[currentScene].values;
+        let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
+        if (objs.videoImages[sequence]) {
+          objs.context.drawImage(objs.videoImages[sequence], 0, 0);
+        }
       }
-      if (currentScene === 2) {
-        let sequence2 = Math.round(calcValues(values.imageSequence, currentYOffset));
-        objs.videoImages[sequence2] && objs.context.drawImage(objs.videoImages[sequence2], 0, 0);
-      }
-
     }
 
     // 1️⃣: loop the function loop() & 2️⃣
@@ -554,29 +550,65 @@
   }
 
 
-  window.addEventListener('scroll', () => {
-    yOffset = window.pageYOffset;
-    scrollLoop();
-    checkMenu();
-
-    if (!rafState) {
-      rafId = requestAnimationFrame(loop);
-      rafState = true;
-    }
-  });
 
   window.addEventListener('load', () => {
+
     document.body.classList.remove('before-load');
     setLayout();
     sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
+
+    // 새로고침 시 스크롤 이벤트가 발생하지 않아 화면이 비는 현상 고치기
+    // 새로고침 후 자동으로 스크롤 시켜서 화면이 비지 않도록
+    let tempYOffset = yOffset;
+    let tempScrollCount = 0;
+    if (tempYOffset > 0) {
+      let siId = setInterval(() => {
+        window.scrollTo(0, tempYOffset);
+        tempYOffset += 2;
+
+        if (tempScrollCount > 10) {
+          clearInterval(siId);
+        }
+        tempScrollCount++;
+      }, 20);
+    }
+
+    window.addEventListener('scroll', () => {
+      yOffset = window.pageYOffset;
+      scrollLoop();
+      checkMenu();
+
+      if (!rafState) {
+        rafId = requestAnimationFrame(loop);
+        rafState = true;
+      }
+      console.log(currentScene);
+    });
+
+    window.addEventListener('resize', () => {
+      if (document.body.offetWidth > 900) {
+        setLayout();
+        sceneInfo[3].values.canvasStartY = 0;
+      }
+
+      if (currentScene === 3) {
+        let tempYOffset = yOffset;
+        let tempScrollCount = 0;
+        if (tempYOffset > 0) {
+          let siId = setInterval(() => {
+            scrollTo(0, tempYOffset);
+            tempYOffset -= 50;
+
+            if (tempScrollCount > 20) {
+              clearInterval(siId);
+            }
+            tempScrollCount++;
+          }, 20);
+        }
+      }
+    });
   });
 
-  window.addEventListener('resize', () => {
-    if (document.body.offetWidth > 900) {
-      setLayout();
-    }
-    sceneInfo[3].values.canvasStartY = 0;
-  });
 
   window.addEventListener('orientationchange', setLayout);
 
