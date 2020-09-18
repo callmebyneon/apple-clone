@@ -16,7 +16,7 @@
     {
       // #section-0
       type: 'sticky',
-      heightNum: 6, // 브라우저 높이의 5배로 scrollheight setting
+      heightNum: 6, // 브라우저 높이의 6배로 scrollheight setting
       scrollHeight: 0,
       objs: {
         container: document.querySelector('#section-0'),
