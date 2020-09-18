@@ -541,8 +541,8 @@
 
     if (delayedYOffset < 1) {
       // console.log('Home!');
-      currentScene = 0;
       scrollLoop();
+      currentScene = 0;
       sceneInfo[0].objs.canvas.style.opacity = 1;
       sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
     }
