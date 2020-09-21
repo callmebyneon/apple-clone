@@ -16,7 +16,7 @@
     {
       // #section-0
       type: 'sticky',
-      heightNum: 6, // 브라우저 높이의 6배로 scrollheight setting
+      heightNum: 6, // 브라우저 높이의 5배로 scrollheight setting
       scrollHeight: 0,
       objs: {
         container: document.querySelector('#section-0'),
@@ -537,12 +537,13 @@
       }
     }
 
-    // home이나 end를 이용해 페이지 끝으로 고속 이동하면 body id가 제대로 인식 안되는 경우를 해결
 
+    // home이나 end를 이용해 페이지 끝으로 고속 이동하면 body id가 제대로 인식 안되는 경우를 해결
     if (delayedYOffset < 1) {
       // console.log('Home!');
+      // TODO: Home키를 눌렀을 때 body-id가 인식되도록 -> scrollLoop에서?? 고쳐야 하나?
       scrollLoop();
-      currentScene = 0;
+      document.body.setAttribute('id', 'scene-0');
       sceneInfo[0].objs.canvas.style.opacity = 1;
       sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
     }
