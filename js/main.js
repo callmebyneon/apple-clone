@@ -537,12 +537,13 @@
       }
     }
 
-    // home이나 end를 이용해 페이지 끝으로 고속 이동하면 body id가 제대로 인식 안되는 경우를 해결
 
+    // home이나 end를 이용해 페이지 끝으로 고속 이동하면 body id가 제대로 인식 안되는 경우를 해결
     if (delayedYOffset < 1) {
       // console.log('Home!');
-      currentScene = 0;
+      // TODO: Home키를 눌렀을 때 body-id가 인식되도록 -> scrollLoop에서?? 고쳐야 하나?
       scrollLoop();
+      document.body.setAttribute('id', 'scene-0');
       sceneInfo[0].objs.canvas.style.opacity = 1;
       sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
     }
